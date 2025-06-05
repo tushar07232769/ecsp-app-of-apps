@@ -1,0 +1,20 @@
+{{- if (index .Values.applications "device-auth").enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: device-auth
+  namespace: {{ .Values.argocd.namespace }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  project: {{ .Values.argocd.project }}
+  destination: {{ toYaml .Values.argocd.destination | nindent 4 }}
+  syncPolicy: {{ toYaml .Values.argocd.syncPolicy | nindent 4 }}
+
+  source:
+    path: device-auth
+    repoURL: {{ .Values.argocd.sourceRepoURL }}
+    targetRevision: {{ .Values.argocd.targetRevision }}
+{{- end }}

@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespace-config
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:eclipse-ecsp/ecsp-helm-charts.git'
+    path: namespace-config
+    targetRevision: gitops
+
+  destination:
+    namespace: core-data-platform
+    server: 'https://kubernetes.default.svc'
+
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

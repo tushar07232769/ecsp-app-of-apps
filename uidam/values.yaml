@@ -1,0 +1,25 @@
+argocd: 
+  namespace: argocd
+  project: 'opensource'
+  destination: 
+    server: 'https://kubernetes.default.svc'
+    namespace: opensource-idam
+  sourceRepoURL: 'https://github.com/eclipse-ecsp/ecsp-helm-charts'
+  targetRevision: 'main'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+
+applications:
+  api-gateway:
+    enabled: true
+  namespace-config:
+    enabled: false
+  uidam-authorization-server:
+    enabled: true
+  uidam-user-management:
+    enabled: true

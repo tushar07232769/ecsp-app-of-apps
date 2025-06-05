@@ -1,0 +1,25 @@
+{{- if (index .Values.applications "namespace-config").enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.argocd.namespace  }}-namespace-config
+  namespace: {{ .Values.argocd.namespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-110"
+spec:
+  project: {{ .Values.argocd.project }}
+  destination: 
+    namespace: {{ .Values.argocd.namespace }}
+    server: {{ toYaml .Values.argocd.destination.server | nindent 4 }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+  source:
+    path: namespace-config
+    repoURL: {{ .Values.argocd.sourceRepoURL }}
+    targetRevision: {{ .Values.argocd.targetRevision }}
+
+{{- end }}

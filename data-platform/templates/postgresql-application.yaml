@@ -1,0 +1,21 @@
+{{- if (index .Values.applications "postgresql").enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql
+  namespace: {{ .Values.argocd.namespace }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.argocd.project }}
+  destination: {{ toYaml .Values.argocd.destination | nindent 4 }}
+  syncPolicy: {{ toYaml .Values.argocd.syncPolicy | nindent 4 }}
+
+  source:
+    repoURL: {{ .Values.argocd.sourceRepoURL }}
+    path: postgresql
+    targetRevision: {{ .Values.argocd.targetRevision }}
+
+    helm:
+      ignoreMissingValueFiles: true
+{{- end }}

@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: core-data-platform
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: core-data-platform
+  source:
+    path: data-platform
+    repoURL: 'https://github.com/HARMAN-Automotive/csp-opensource-apps.git'
+    targetRevision: main
+  project: default
+  # syncPolicy:
+  #   automated:
+  #     prune: true
+  #     selfHeal: true

@@ -1,0 +1,23 @@
+argocd: 
+  namespace: argocd
+  project: 'opensource'
+  destination: 
+    server: 'https://kubernetes.default.svc'
+    namespace: ecsp-services
+  sourceRepoURL: 'https://github.com/eclipse-ecsp/ecsp-helm-charts'
+  targetRevision: 'main'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+
+applications:
+  association:
+    enabled: true
+  device-auth:
+    enabled: true
+  device-message:
+    enabled: true  

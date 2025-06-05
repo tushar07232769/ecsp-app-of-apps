@@ -1,0 +1,20 @@
+{{- if (index .Values.applications "uidam-authorization-server").enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: uidam-authorization-server
+  namespace: {{ .Values.argocd.namespace }}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  project: {{ .Values.argocd.project }}
+  destination: {{ toYaml .Values.argocd.destination | nindent 4 }}
+  syncPolicy: {{ toYaml .Values.argocd.syncPolicy | nindent 4 }}
+
+  source:
+    path: uidam-authorization-server
+    repoURL: {{ .Values.argocd.sourceRepoURL }}
+    targetRevision: {{ .Values.argocd.targetRevision }}
+{{- end }}
