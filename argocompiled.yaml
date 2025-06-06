@@ -1,0 +1,78 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ''
+spec:
+  destination:
+    namespace: ''
+    server: ''
+  source:
+    path: ''
+    repoURL: ''
+    targetRevision: HEAD
+  sources: []
+  project: ''
+
+
+Core-Data-Platform
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: data-platform-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/tushar07232769/ecsp-app-of-apps'
+    path: data-platform
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: core-data-platform
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+
+UIDAM
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-gateway-app
+  namespace: argocd
+spec:  
+  project: default
+  source:
+    repoURL: 'https://github.com/tushar07232769/ecsp-app-of-apps'
+    path: uidam
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: uidam-services
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+
+CSP Services
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: csp-services-app
+  namespace: argocd
+spec:  
+  project: default
+  source:
+    repoURL: 'https://github.com/tushar07232769/ecsp-app-of-apps'
+    path: csp-services
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: csp-services
+  syncPolicy:
+  automated: {}
+  syncOptions:
+    - CreateNamespace=true
+

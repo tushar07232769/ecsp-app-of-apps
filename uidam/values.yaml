@@ -4,7 +4,7 @@ argocd:
   destination: 
     server: 'https://kubernetes.default.svc'
     namespace: opensource-idam
-  sourceRepoURL: 'https://github.com/eclipse-ecsp/ecsp-helm-charts'
+  sourceRepoURL: 'https://github.com/tushar07232769/ecsp-helm-charts-main'
   targetRevision: 'main'
   syncPolicy:
     automated:
